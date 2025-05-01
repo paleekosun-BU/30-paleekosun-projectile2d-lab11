@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Projectile2D : MonoBehaviour
 {
@@ -18,11 +19,17 @@ public class Projectile2D : MonoBehaviour
             {
                 target.transform.position = new Vector2(hit.point.x, hit.point.y);
                 Debug.Log("hit " + hit.collider.name);
+
+                Vector2 projectileVelocity = CalculateProjectileVelocity(shootPoint.position, hit.point, 1f);
+
+                Rigidbody2D shootBullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
+
+                shootBullet.linearVelocity = projectileVelocity;
             }
         }
     }
 
-    Vector2 CalculateProjectile(Vector2 origin, Vector2 target, float time)
+    Vector2 CalculateProjectileVelocity(Vector2 origin, Vector2 target, float time)
     {
         Vector2 distance = target - origin;
 
